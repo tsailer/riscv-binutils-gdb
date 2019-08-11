@@ -312,6 +312,18 @@ enum riscv_insn_class
    INSN_CLASS_ZICSR,
    INSN_CLASS_ZIFENCEI,
    INSN_CLASS_ZIHINTPAUSE,
+   INSN_CLASS_B,
+   INSN_CLASS_B_OR_ZBT,
+   INSN_CLASS_B_OR_ZBR,
+   INSN_CLASS_B_OR_ZBB,
+   INSN_CLASS_B_OR_ZBA,
+   INSN_CLASS_B_OR_ZBC,
+   INSN_CLASS_B_OR_ZBE,
+   INSN_CLASS_B_OR_ZBF,
+   INSN_CLASS_B_OR_ZBM,
+   INSN_CLASS_B_OR_ZBP,
+   INSN_CLASS_B_OR_ZBS,
+   INSN_CLASS_B_OR_ZBB_OR_ZBP
   };
 
 /* This structure holds information for a particular instruction.  */
@@ -486,6 +498,9 @@ enum
   M_ZEXTW,
   M_SEXTB,
   M_SEXTH,
+  M_RL,
+  M_FL,
+  M_PERM,
   M_NUM_MACROS
 };
 
