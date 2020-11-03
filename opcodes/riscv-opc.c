@@ -1150,6 +1150,18 @@ const struct riscv_ext_version riscv_ext_version_table[] =
 
 {"zihintpause", ISA_SPEC_CLASS_DRAFT, 1, 0},
 
+{"b",     ISA_SPEC_CLASS_NONE, 0, 92},
+{"zbb",   ISA_SPEC_CLASS_NONE, 0, 92},
+{"zbs",   ISA_SPEC_CLASS_NONE, 0, 92},
+{"zba",   ISA_SPEC_CLASS_NONE, 0, 92},
+{"zbp",   ISA_SPEC_CLASS_NONE, 0, 92},
+{"zbe",   ISA_SPEC_CLASS_NONE, 0, 92},
+{"zbf",   ISA_SPEC_CLASS_NONE, 0, 92},
+{"zbc",   ISA_SPEC_CLASS_NONE, 0, 92},
+{"zbr",   ISA_SPEC_CLASS_NONE, 0, 92},
+{"zbm",   ISA_SPEC_CLASS_NONE, 0, 92},
+{"zbt",   ISA_SPEC_CLASS_NONE, 0, 92},
+
 /* Terminate the list.  */
 {NULL, 0, 0, 0}
 };
