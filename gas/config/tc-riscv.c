@@ -291,6 +291,9 @@ riscv_multi_subset_supports (enum riscv_insn_class insn_class)
       return riscv_subset_supports ("b") || riscv_subset_supports ("zbf")
 	|| riscv_subset_supports ("zbp");
 
+    case INSN_CLASS_XAMETHYST:
+      return riscv_subset_supports ("xamethyst");
+
     default:
       as_fatal ("Unreachable");
       return FALSE;
