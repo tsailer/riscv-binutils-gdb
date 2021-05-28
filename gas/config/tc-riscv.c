@@ -238,6 +238,7 @@ riscv_multi_subset_supports (enum riscv_insn_class insn_class)
     case INSN_CLASS_F: return riscv_subset_supports ("f");
     case INSN_CLASS_D: return riscv_subset_supports ("d");
     case INSN_CLASS_Q: return riscv_subset_supports ("q");
+    case INSN_CLASS_K: return riscv_subset_supports ("k");
 
     case INSN_CLASS_F_AND_C:
       return (riscv_subset_supports ("f")
@@ -1035,6 +1036,7 @@ validate_riscv_insn (const struct riscv_opcode *opc, int length)
       case 'r':	USE_BITS (OP_MASK_RS3,          OP_SH_RS3);     break;
       case 'P':	USE_BITS (OP_MASK_PRED,		OP_SH_PRED); break;
       case 'Q':	USE_BITS (OP_MASK_SUCC,		OP_SH_SUCC); break;
+      case 'b':	USE_BITS (OP_MASK_BYTESEL,	OP_SH_BYTESEL); break;
       case 'o':
       case 'j': used_bits |= ENCODE_ITYPE_IMM (-1U); break;
       case 'a':	used_bits |= ENCODE_UJTYPE_IMM (-1U); break;
@@ -1308,6 +1310,10 @@ macro_build (expressionS *ep, const char *name, const char *fmt, ...)
 
 	case '>':
 	  INSERT_OPERAND (SHAMT, insn, va_arg (args, int));
+	  continue;
+
+	case 'b':
+	  INSERT_OPERAND (BYTESEL, insn, va_arg (args, int));
 	  continue;
 
 	case 'j':
@@ -2488,6 +2494,17 @@ riscv_ip (char *str, struct riscv_cl_insn *ip, expressionS *imm_expr,
 		  continue;
 		}
 	      break;
+
+	    case 'b':		/* AES byte select.  */
+	      my_getExpression (imm_expr, s);
+	      check_absolute_expr (ip, imm_expr, FALSE);
+	      if ((unsigned long) imm_expr->X_add_number > 3)
+		as_bad (_("Improper byte select immediate (%lu)"),
+			(unsigned long) imm_expr->X_add_number);
+	      INSERT_OPERAND (BYTESEL, *ip, imm_expr->X_add_number);
+	      imm_expr->X_op = O_absent;
+	      s = expr_end;
+	      continue;
 
 	    case 'd':		/* Destination register.  */
 	    case 's':		/* Source register.  */

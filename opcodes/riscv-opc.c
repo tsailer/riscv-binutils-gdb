@@ -712,6 +712,23 @@ const struct riscv_opcode riscv_opcodes[] =
 {"unzip2",    0, INSN_CLASS_B_OR_ZBP,   "d,s",  0, (int) M_PERM, match_never, INSN_MACRO },
 {"unzip",     0, INSN_CLASS_B_OR_ZBP,   "d,s",  0, (int) M_PERM, match_never, INSN_MACRO },
 
+/* Cryptography instruction subset */
+
+{"aes32esmi",    0, INSN_CLASS_K,       "s,t,b",  MATCH_AES32ESMI, MASK_AES32ESMI, match_opcode, 0 },
+{"aes32esi",     0, INSN_CLASS_K,       "s,t,b",  MATCH_AES32ESI, MASK_AES32ESI, match_opcode, 0 },
+{"aes32dsmi",    0, INSN_CLASS_K,       "s,t,b",  MATCH_AES32DSMI, MASK_AES32DSMI, match_opcode, 0 },
+{"aes32dsi",     0, INSN_CLASS_K,       "s,t,b",  MATCH_AES32DSI, MASK_AES32DSI, match_opcode, 0 },
+{"sha256sig0",   0, INSN_CLASS_K,       "d,s",  MATCH_SHA256SIG0, MASK_SHA256SIG0, match_opcode, 0 },
+{"sha256sig1",   0, INSN_CLASS_K,       "d,s",  MATCH_SHA256SIG1, MASK_SHA256SIG1, match_opcode, 0 },
+{"sha256sum0",   0, INSN_CLASS_K,       "d,s",  MATCH_SHA256SUM0, MASK_SHA256SUM0, match_opcode, 0 },
+{"sha256sum1",   0, INSN_CLASS_K,       "d,s",  MATCH_SHA256SUM1, MASK_SHA256SUM1, match_opcode, 0 },
+{"sha512sum0r",  0, INSN_CLASS_K,       "d,s,t",  MATCH_SHA512SUM0R, MASK_SHA512SUM0R, match_opcode, 0 },
+{"sha512sum1r",  0, INSN_CLASS_K,       "d,s,t",  MATCH_SHA512SUM1R, MASK_SHA512SUM1R, match_opcode, 0 },
+{"sha512sig0l",  0, INSN_CLASS_K,       "d,s,t",  MATCH_SHA512SIG0L, MASK_SHA512SIG0L, match_opcode, 0 },
+{"sha512sig0h",  0, INSN_CLASS_K,       "d,s,t",  MATCH_SHA512SIG0H, MASK_SHA512SIG0H, match_opcode, 0 },
+{"sha512sig1l",  0, INSN_CLASS_K,       "d,s,t",  MATCH_SHA512SIG1L, MASK_SHA512SIG1L, match_opcode, 0 },
+{"sha512sig1h",  0, INSN_CLASS_K,       "d,s,t",  MATCH_SHA512SIG1H, MASK_SHA512SIG1H, match_opcode, 0 },
+
 /* Single-precision floating-point instruction subset */
 {"frcsr",     0, INSN_CLASS_F,   "d",  MATCH_FRCSR, MASK_FRCSR, match_opcode, INSN_ALIAS },
 {"frsr",      0, INSN_CLASS_F,   "d",  MATCH_FRCSR, MASK_FRCSR, match_opcode, INSN_ALIAS },

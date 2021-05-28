@@ -256,6 +256,11 @@ static const char * const riscv_pred_succ[16] =
 #define OP_MASK_CFUNCT2                0x3
 #define OP_SH_CFUNCT2          5
 
+/* RVK fields.  */
+
+#define OP_MASK_BYTESEL 3
+#define OP_SH_BYTESEL 30
+
 /* ABI names for selected x-registers.  */
 
 #define X_RA 1
@@ -325,6 +330,7 @@ enum riscv_insn_class
    INSN_CLASS_B_OR_ZBS,
    INSN_CLASS_B_OR_ZBB_OR_ZBP,
    INSN_CLASS_B_OR_ZBF_OR_ZBP,
+   INSN_CLASS_K,
    INSN_CLASS_XAMETHYST
   };
 
