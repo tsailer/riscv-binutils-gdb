@@ -1313,7 +1313,7 @@ riscv_parsing_subset_version (riscv_parse_subset_t *rps,
 const char *
 riscv_supported_std_ext (void)
 {
-  return "mafdqlcbjtpvn";
+  return "mafdqlcbjtpvnk";
 }
 
 /* Parsing function for standard extensions.
@@ -1598,7 +1598,8 @@ riscv_parse_prefixed_ext (riscv_parse_subset_t *rps,
 static const char * const riscv_std_z_ext_strtab[] =
 {
   "zicsr", "zifencei", "zihintpause",
-  "zbb", "zbs", "zba", "zbp", "zbe", "zbf", "zbc", "zbr", "zbm", "zbt", NULL
+  "zbb", "zbs", "zba", "zbp", "zbe", "zbf", "zbc", "zbr", "zbm", "zbt",
+  "zknd", "zkne", "zknh", "zksh", "zksed", NULL,
 };
 
 static const char * const riscv_std_s_ext_strtab[] =

@@ -238,7 +238,6 @@ riscv_multi_subset_supports (enum riscv_insn_class insn_class)
     case INSN_CLASS_F: return riscv_subset_supports ("f");
     case INSN_CLASS_D: return riscv_subset_supports ("d");
     case INSN_CLASS_Q: return riscv_subset_supports ("q");
-    case INSN_CLASS_K: return riscv_subset_supports ("k");
 
     case INSN_CLASS_F_AND_C:
       return (riscv_subset_supports ("f")
@@ -291,6 +290,21 @@ riscv_multi_subset_supports (enum riscv_insn_class insn_class)
     case INSN_CLASS_B_OR_ZBF_OR_ZBP:
       return riscv_subset_supports ("b") || riscv_subset_supports ("zbf")
 	|| riscv_subset_supports ("zbp");
+
+    case INSN_CLASS_K_OR_ZKND:
+      return riscv_subset_supports ("k") || riscv_subset_supports ("zknd");
+
+    case INSN_CLASS_K_OR_ZKNE:
+      return riscv_subset_supports ("k") || riscv_subset_supports ("zkne");
+
+    case INSN_CLASS_K_OR_ZKNH:
+      return riscv_subset_supports ("k") || riscv_subset_supports ("zknh");
+
+    case INSN_CLASS_K_OR_ZKSH:
+      return riscv_subset_supports ("k") || riscv_subset_supports ("zksh");
+
+    case INSN_CLASS_K_OR_ZKSED:
+      return riscv_subset_supports ("k") || riscv_subset_supports ("zksed");
 
     case INSN_CLASS_XAMETHYST:
       return riscv_subset_supports ("xamethyst");
@@ -1020,6 +1034,7 @@ validate_riscv_insn (const struct riscv_opcode *opc, int length)
       case '<': USE_BITS (OP_MASK_SHAMTW,	OP_SH_SHAMTW);	break;
       case '|': USE_BITS (OP_MASK_SHAMTW,	OP_SH_SHAMTW);	break;
       case '>':	USE_BITS (OP_MASK_SHAMT,	OP_SH_SHAMT);	break;
+      case 'f':	USE_BITS (OP_MASK_SHAMT,	OP_SH_SHAMT);	break;
       case 'A': break;
       case 'D':	USE_BITS (OP_MASK_RD,		OP_SH_RD);	break;
       case 'Z':	USE_BITS (OP_MASK_RS1,		OP_SH_RS1);	break;
@@ -1309,6 +1324,7 @@ macro_build (expressionS *ep, const char *name, const char *fmt, ...)
 	  continue;
 
 	case '>':
+	case 'f':
 	  INSERT_OPERAND (SHAMT, insn, va_arg (args, int));
 	  continue;
 
@@ -2438,6 +2454,17 @@ riscv_ip (char *str, struct riscv_cl_insn *ip, expressionS *imm_expr,
 	      my_getExpression (imm_expr, s);
 	      check_absolute_expr (ip, imm_expr, FALSE);
 	      if ((unsigned long) imm_expr->X_add_number >= xlen)
+		as_bad (_("Improper shift amount (%lu)"),
+			(unsigned long) imm_expr->X_add_number);
+	      INSERT_OPERAND (SHAMT, *ip, imm_expr->X_add_number);
+	      imm_expr->X_op = O_absent;
+	      s = expr_end;
+	      continue;
+
+	    case 'f':		/* Shift amount, 0 - 63.  */
+	      my_getExpression (imm_expr, s);
+	      check_absolute_expr (ip, imm_expr, FALSE);
+	      if ((unsigned long) imm_expr->X_add_number >= 64)
 		as_bad (_("Improper shift amount (%lu)"),
 			(unsigned long) imm_expr->X_add_number);
 	      INSERT_OPERAND (SHAMT, *ip, imm_expr->X_add_number);
